@@ -20,6 +20,9 @@ public class Car {
     private String color;
     @Column(name = "YearOfManufacture")
     private int yearOfManufacture;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TransmissionType")
+    private TransmissionType transmissionType;
     @Column(name = "Price", precision = 10, scale = 2)
     private BigDecimal price;
     @Column(name = "IsNew")
@@ -86,6 +89,14 @@ public class Car {
 
     public void setYearOfManufacture(int yearOfManufacture) {
         this.yearOfManufacture = yearOfManufacture;
+    }
+
+    public TransmissionType getTransmissionType() {
+        return transmissionType;
+    }
+
+    public void setTransmissionType(TransmissionType transmissionType) {
+        this.transmissionType = transmissionType;
     }
 
     public BigDecimal getPrice() {
