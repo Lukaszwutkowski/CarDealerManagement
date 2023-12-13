@@ -1,7 +1,6 @@
 package com.supecars.cardealermanagement.service;
 
 import com.supecars.cardealermanagement.model.Car;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

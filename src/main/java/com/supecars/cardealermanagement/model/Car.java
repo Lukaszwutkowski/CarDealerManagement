@@ -16,6 +16,12 @@ public class Car {
     private String brand;
     @Column(name = "Model", length = 50)
     private String model;
+    @Column(name = "EngineType")
+    private String engineType;
+    @Column(name = "EngineCapacity")
+    private double engineCapacity;
+    @Column(name = "HorsePower")
+    private int horsepower;
     @Column(name = "Color", length = 50)
     private String color;
     @Column(name = "YearOfManufacture")
@@ -36,12 +42,19 @@ public class Car {
     @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
     private List<ServiceEntry> serviceEntries;
 
-    public Car(String vin, String brand, String model, String color, int yearOfManufacture, BigDecimal price, boolean isNew, int mileage) {
+    public Car(String vin, String brand, String model, String engineType, double engineCapacity,
+               int horsepower, String color, int yearOfManufacture,
+               TransmissionType transmissionType, BigDecimal price, boolean isNew,
+               int mileage) {
         this.vin = vin;
         this.brand = brand;
         this.model = model;
+        this.engineType = engineType;
+        this.engineCapacity = engineCapacity;
+        this.horsepower = horsepower;
         this.color = color;
         this.yearOfManufacture = yearOfManufacture;
+        this.transmissionType = transmissionType;
         this.price = price;
         this.isNew = isNew;
         this.mileage = mileage;
@@ -73,6 +86,30 @@ public class Car {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public String getEngineType() {
+        return engineType;
+    }
+
+    public void setEngineType(String engineType) {
+        this.engineType = engineType;
+    }
+
+    public double getEngineCapacity() {
+        return engineCapacity;
+    }
+
+    public void setEngineCapacity(double engineCapacity) {
+        this.engineCapacity = engineCapacity;
+    }
+
+    public int getHorsepower() {
+        return horsepower;
+    }
+
+    public void setHorsepower(int horsepower) {
+        this.horsepower = horsepower;
     }
 
     public String getColor() {

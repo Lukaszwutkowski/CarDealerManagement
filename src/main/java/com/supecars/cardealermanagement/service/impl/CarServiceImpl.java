@@ -46,6 +46,9 @@ public class CarServiceImpl implements CarService {
 
         car.setBrand(updatedCar.getBrand());
         car.setModel(updatedCar.getModel());
+        car.setEngineType(updatedCar.getEngineType());
+        car.setEngineCapacity(updatedCar.getEngineCapacity());
+        car.setHorsepower(updatedCar.getHorsepower());
         car.setColor(updatedCar.getColor());
         car.setYearOfManufacture(updatedCar.getYearOfManufacture());
         car.setTransmissionType(updatedCar.getTransmissionType());
