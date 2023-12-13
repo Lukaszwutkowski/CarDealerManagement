@@ -44,19 +44,22 @@ public class CarServiceImpl implements CarService {
         Car car = carDao.findById(vinNumber)
                 .orElseThrow(() -> new CarNotFoundException("Car with VIN " + vinNumber + " not found"));
 
-        car.setBrand(updatedCar.getBrand());
-        car.setModel(updatedCar.getModel());
-        car.setEngineType(updatedCar.getEngineType());
-        car.setEngineCapacity(updatedCar.getEngineCapacity());
-        car.setHorsepower(updatedCar.getHorsepower());
-        car.setColor(updatedCar.getColor());
-        car.setYearOfManufacture(updatedCar.getYearOfManufacture());
-        car.setTransmissionType(updatedCar.getTransmissionType());
-        car.setPrice(updatedCar.getPrice());
-        car.setNew(updatedCar.isNew());
-        car.setMileage(updatedCar.getMileage());
+        updateCarDetails(car, updatedCar);
 
         carDao.save(car);
 
+    }
+    private void updateCarDetails(Car car, Car updatedCar) {
+        Optional.ofNullable(updatedCar.getBrand()).ifPresent(car::setBrand);
+        Optional.ofNullable(updatedCar.getModel()).ifPresent(car::setModel);
+        Optional.ofNullable(updatedCar.getEngineType()).ifPresent(car::setEngineType);
+        Optional.of(updatedCar.getEngineCapacity()).ifPresent(car::setEngineCapacity);
+        Optional.of(updatedCar.getHorsepower()).ifPresent(car::setHorsepower);
+        Optional.ofNullable(updatedCar.getColor()).ifPresent(car::setColor);
+        Optional.of(updatedCar.getYearOfManufacture()).ifPresent(car::setYearOfManufacture);
+        Optional.ofNullable(updatedCar.getTransmissionType()).ifPresent(car::setTransmissionType);
+        Optional.ofNullable(updatedCar.getPrice()).ifPresent(car::setPrice);
+        Optional.of(updatedCar.isNew()).ifPresent(car::setNew);
+        Optional.of(updatedCar.getMileage()).ifPresent(car::setMileage);
     }
 }
