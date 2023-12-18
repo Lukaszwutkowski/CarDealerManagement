@@ -10,8 +10,8 @@ public class Customer extends Person{
     @Column(name = "CustomerID")
     private int customerId;
 
-    public Customer(String firstName, String lastName, Address address, String phoneNumber, String email, int customerId) {
-        super(firstName, lastName, address, phoneNumber, email);
+    public Customer(String firstName, String lastName, String street, String city, String postalCode, String country, String phoneNumber, String email, int customerId) {
+        super(firstName, lastName, street, city, postalCode, country, phoneNumber, email);
         this.customerId = customerId;
     }
 

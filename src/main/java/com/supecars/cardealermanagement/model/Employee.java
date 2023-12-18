@@ -24,8 +24,8 @@ public class Employee extends Person{
     @OneToMany(mappedBy = "employee")
     private List<Sale> sales;
 
-    public Employee(String firstName, String lastName, Address address, String phoneNumber, String email, int employeeId, String position, BigDecimal salary, Date hireDate) {
-        super(firstName, lastName, address, phoneNumber, email);
+    public Employee(String firstName, String lastName, String street, String city, String postalCode, String country, String phoneNumber, String email, int employeeId, String position, BigDecimal salary, Date hireDate) {
+        super(firstName, lastName, street, city, postalCode, country, phoneNumber, email);
         this.employeeId = employeeId;
         this.position = position;
         this.salary = salary;

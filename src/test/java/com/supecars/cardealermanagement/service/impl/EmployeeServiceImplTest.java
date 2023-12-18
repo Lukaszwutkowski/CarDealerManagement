@@ -1,7 +1,6 @@
 package com.supecars.cardealermanagement.service.impl;
 
 import com.supecars.cardealermanagement.dao.EmployeeDao;
-import com.supecars.cardealermanagement.model.Address;
 import com.supecars.cardealermanagement.model.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,16 +36,12 @@ class EmployeeServiceImplTest {
 
     @BeforeEach
     void setUp() throws ParseException {
-        Address address1 = new Address(1, "Main street", "Holmestrand", "8080", "Norway");
-        Address address2 = new Address(2, "New street", "Holmestrand", "8080", "Norway");
-        Address address3 = new Address(3, "Updated street", "Holmestrand", "8080", "Norway");
-
         Date hireDate1 = format.parse("2022-04-01");
         Date hireDate2 = format.parse("2020-01-01");
 
-        employee1 = new Employee("John", "Smith", address1, "557734527", "john.smith@example.com", 1, "Sales advisor", new BigDecimal("50000"), hireDate1);
-        employee2 = new Employee("Jane", "Summer", address2, "556677890", "jane.summer@example.com", 2, "Sales Manager", new BigDecimal("70000"), hireDate2);
-        updatedEmployee = new Employee("Jane", "Summer", address3, "556677890", "jane.summer@example.com", 2, "Sales Manager", new BigDecimal("70000"), hireDate2);
+        employee1 = new Employee("John", "Smith", "Main street", "Holmestrand", "8080", "Norway", "557734527", "john.smith@example.com", 1, "Sales advisor", new BigDecimal("50000"), hireDate1);
+        employee2 = new Employee("Jane", "Summer", "New street", "Holmestrand", "8080", "Norway", "556677890", "jane.summer@example.com", 2, "Sales Manager", new BigDecimal("70000"), hireDate2);
+        updatedEmployee = new Employee("Jane", "Summer", "Updated street", "Holmestrand", "8080", "Norway", "556677890", "jane.summer@example.com", 2, "Sales Manager", new BigDecimal("70000"), hireDate2);
     }
 
 

@@ -53,7 +53,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     private void updateEmployeeDetails(Employee existingEmployee, Employee updatedEmployee) {
         Optional.ofNullable(updatedEmployee.getFirstName()).ifPresent(existingEmployee::setFirstName);
         Optional.ofNullable(updatedEmployee.getLastName()).ifPresent(existingEmployee::setLastName);
-        Optional.ofNullable(updatedEmployee.getAddress()).ifPresent(existingEmployee::setAddress);
+        Optional.ofNullable(updatedEmployee.getStreet()).ifPresent(existingEmployee::setStreet);
+        Optional.ofNullable(updatedEmployee.getCity()).ifPresent(existingEmployee::setCity);
+        Optional.ofNullable(updatedEmployee.getPostalCode()).ifPresent(existingEmployee::setPostalCode);
+        Optional.ofNullable(updatedEmployee.getCountry()).ifPresent(existingEmployee::setCountry);
         Optional.ofNullable(updatedEmployee.getPhoneNumber()).ifPresent(existingEmployee::setPhoneNumber);
         Optional.ofNullable(updatedEmployee.getEmail()).ifPresent(existingEmployee::setEmail);
         Optional.ofNullable(updatedEmployee.getPosition()).ifPresent(existingEmployee::setPosition);
