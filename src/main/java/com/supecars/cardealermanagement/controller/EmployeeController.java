@@ -40,13 +40,13 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Employee> deleteCar(@PathVariable int id) {
+    public ResponseEntity<Employee> deleteEmployee(@PathVariable int id) {
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateCar(@PathVariable int id, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
         employeeService.updateEmployee(id, employee);
         return ResponseEntity.ok(employee);
     }
