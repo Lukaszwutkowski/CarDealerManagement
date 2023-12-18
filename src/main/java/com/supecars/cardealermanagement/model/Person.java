@@ -2,8 +2,6 @@ package com.supecars.cardealermanagement.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
 
 
 @MappedSuperclass
@@ -12,19 +10,26 @@ public abstract class Person {
     private String firstName;
     @Column(name = "LastName")
     private String lastName;
-    @ManyToOne
-    @JoinColumn(name = "addressId")
-    private Address address;
-
+    @Column(name = "Street")
+    private String street;
+    @Column(name = "City")
+    private String city;
+    @Column(name = "PostalCode")
+    private String postalCode;
+    @Column(name = "Country")
+    private String country;
     @Column(name = "PhoneNumber")
     private String phoneNumber;
     @Column(name = "Email")
     private String email;
 
-    public Person(String firstName, String lastName, Address address, String phoneNumber, String email) {
+    public Person(String firstName, String lastName, String street, String city, String postalCode, String country, String phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
+        this.street = street;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
@@ -49,14 +54,37 @@ public abstract class Person {
         this.lastName = lastName;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
     public String getPhoneNumber() {
         return phoneNumber;
     }

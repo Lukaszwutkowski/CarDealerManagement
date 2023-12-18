@@ -14,9 +14,6 @@ public class Inventory {
     @ManyToOne
     @JoinColumn(name = "VIN", referencedColumnName = "VIN")
     private Car car;
-    @ManyToOne
-    @JoinColumn(name = "AddressID", referencedColumnName = "AddressID")
-    private Address address;
     @Enumerated(EnumType.STRING)
     @Column(name = "Status")
     private Status status;
@@ -26,10 +23,9 @@ public class Inventory {
     @Column(name = "AcquisitionPrice", precision = 10, scale = 2)
     private BigDecimal acquisitionPrice;
 
-    public Inventory(int inventoryId, Car car, Address address, Status status, Date acquisitionDate, BigDecimal acquisitionPrice) {
+    public Inventory(int inventoryId, Car car, Status status, Date acquisitionDate, BigDecimal acquisitionPrice) {
         this.inventoryId = inventoryId;
         this.car = car;
-        this.address = address;
         this.status = status;
         this.acquisitionDate = acquisitionDate;
         this.acquisitionPrice = acquisitionPrice;
@@ -53,14 +49,6 @@ public class Inventory {
 
     public void setCar(Car car) {
         this.car = car;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public Status getStatus() {
