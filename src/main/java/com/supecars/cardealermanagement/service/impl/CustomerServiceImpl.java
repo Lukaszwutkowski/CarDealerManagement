@@ -1,7 +1,7 @@
 package com.supecars.cardealermanagement.service.impl;
 
 import com.supecars.cardealermanagement.dao.CustomerDao;
-import com.supecars.cardealermanagement.exception.CustomerNotFoundExeption;
+import com.supecars.cardealermanagement.exception.CustomerNotFoundException;
 import com.supecars.cardealermanagement.model.Customer;
 import com.supecars.cardealermanagement.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void updateCustomer(int id, Customer updatedCustomer) {
         Customer existingCustomer = customerDao.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundExeption("Customer not found"));
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 
         udateCustomerDetails(existingCustomer, updatedCustomer);
 
