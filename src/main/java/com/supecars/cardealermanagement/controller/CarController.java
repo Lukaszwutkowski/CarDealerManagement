@@ -5,11 +5,13 @@ import com.supecars.cardealermanagement.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/cars")
 public class CarController {
 
@@ -20,9 +22,10 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Car>> getAllCars() {
+    public String getAllCars(Model model) {
         List<Car> cars = carService.getAllCars();
-        return ResponseEntity.ok(cars);
+        model.addAttribute("cars", cars);
+        return "cars";
     }
 
     @GetMapping("/{vin}")
@@ -32,10 +35,16 @@ public class CarController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/add")
+    public String addCarForm(Model model) {
+        model.addAttribute("car", new Car());
+        return "addCar";
+    }
+
     @PostMapping
-    public ResponseEntity<Car> addNewCar(@RequestBody Car car) {
+    public String addNewCar(@ModelAttribute Car car) {
         carService.addNewCar(car);
-        return new ResponseEntity<>(car, HttpStatus.CREATED);
+        return "redirect:/cars";
     }
 
     @DeleteMapping("/{vin}")
