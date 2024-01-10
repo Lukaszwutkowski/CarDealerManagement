@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="'Car Dealership Management'">Add Car</title>
+    <title th:text="'Car Dealership Management'">List of Cars</title>
     <!-- Bootstrap CSS -->
-    <link th:href="@{css/bootstrap.min.css}" href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{css/bootstrap.min.css}" href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
     <!-- Custom CSS -->
     <link th:href="@{css/main.css}" href="/static/css/main.css" rel="stylesheet">
 </head>
@@ -44,66 +44,79 @@
         </div>
     </div>
 </nav>
-
-<div class="container mt-4">
+<!-- Main Content Area with Background -->
+<div class="flex-grow-1 d-flex">
+    <div class="container mt-4">
     <h2>Add New Car</h2>
     <form th:action="@{/cars}" th:object="${car}" method="post">
         <div class="mb-3">
             <label for="vin" class="form-label">VIN</label>
-            <input type="text" class="form-control" id="vin" th:field="${vin}" placeholder="Enter VIN" required>
+            <input type="text" class="form-control" id="vin" th:field="*{vin}" placeholder="Enter VIN" required>
         </div>
         <div class="mb-3">
             <label for="brand" class="form-label">Brand</label>
-            <input type="text" class="form-control" id="brand" th:field="${brand}" placeholder="Enter Brand" required>
+            <input type="text" class="form-control" id="brand" th:field="*{brand}" placeholder="Enter Brand" required>
         </div>
         <div class="mb-3">
             <label for="model" class="form-label">Model</label>
-            <input type="text" class="form-control" id="model" th:field="${model}" placeholder="Enter Model" required>
+            <input type="text" class="form-control" id="model" th:field="*{model}" placeholder="Enter Model" required>
         </div>
         <div class="mb-3">
             <label for="engineType" class="form-label">Engine Type</label>
-            <input type="text" class="form-control" id="engineType" th:field="${engineType}" placeholder="Enter Engine Type">
+            <input type="text" class="form-control" id="engineType" th:field="*{engineType}" placeholder="Enter Engine Type">
         </div>
         <div class="mb-3">
             <label for="engineCapacity" class="form-label">Engine Capacity</label>
-            <input type="number" class="form-control" id="engineCapacity" th:field="${engineCapacity}" placeholder="Enter Engine Capacity">
+            <input type="number" class="form-control" id="engineCapacity" th:field="*{engineCapacity}" placeholder="Enter Engine Capacity">
         </div>
         <div class="mb-3">
             <label for="horsepower" class="form-label">Horsepower</label>
-            <input type="number" class="form-control" id="horsepower" th:field="${horsepower}" placeholder="Enter Horsepower">
+            <input type="number" class="form-control" id="horsepower" th:field="*{horsepower}" placeholder="Enter Horsepower">
         </div>
         <div class="mb-3">
             <label for="color" class="form-label">Color</label>
-            <input type="text" class="form-control" id="color" th:field="${color}" placeholder="Enter Color">
+            <input type="text" class="form-control" id="color" th:field="*{color}" placeholder="Enter Color">
         </div>
         <div class="mb-3">
             <label for="yearOfManufacture" class="form-label">Year of Manufacture</label>
-            <input type="number" class="form-control" id="yearOfManufacture" th:field="${yearOfManufacture}" placeholder="Enter Year of Manufacture">
+            <input type="number" class="form-control" id="yearOfManufacture" th:field="*{yearOfManufacture}" placeholder="Enter Year of Manufacture">
         </div>
         <div class="mb-3">
             <label for="transmissionType" class="form-label">Transmission Type</label>
-            <select class="form-control" id="transmissionType" th:field="${transmissionType}">
-                <option value="MANUAL">Manual</option>
-                <option value="AUTOMATIC">Automatic</option>
+            <select class="form-control" id="transmissionType" th:field="*{transmissionType}">
+                <option th:each="type : ${T(com.supecars.cardealermanagement.model.TransmissionType).values()}"
+                        th:value="${type}" th:text="${type}">
+                </option>
             </select>
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">Price</label>
-            <input type="text" class="form-control" id="price" th:field="${price}" placeholder="Enter Price">
+            <input type="text" class="form-control" id="price" th:field="*{price}" placeholder="Enter Price">
         </div>
         <div class="mb-3">
             <label for="isNew" class="form-label">Is New?</label>
-            <select class="form-control" id="isNew" th:field="${isNew}">
+            <select class="form-control" id="isNew" th:field="*{isNew}">
                 <option value="true">Yes</option>
                 <option value="false">No</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="mileage" class="form-label">Mileage</label>
-            <input type="number" class="form-control" id="mileage" th:field="${mileage}" placeholder="Enter Mileage">
+            <input type="number" class="form-control" id="mileage" th:field="*{mileage}" placeholder="Enter Mileage">
         </div>
         <button type="submit" class="btn btn-primary">Add Car</button>
     </form>
 </div>
+    </div>
+<!-- Footer Section -->
+<footer class="bg-dark text-white">
+    <div class="container-fluid text-center py-3">
+        <span>&copy; 2023 Car Dealership Management. All rights reserved.</span>
+    </div>
+</footer>
+
+<!-- Bootstrap JavaScript and Popper.js -->
+<script th:src="@{js/bootstrap.bundle.min.js}" src="/static/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

@@ -104,7 +104,7 @@ class CarServiceImplTest {
         assertEquals(updatedCar.getYearOfManufacture(), car1.getYearOfManufacture());
         assertEquals(updatedCar.getTransmissionType(), car1.getTransmissionType());
         assertEquals(updatedCar.getPrice(), car1.getPrice());
-        assertEquals(updatedCar.isNew(), car1.isNew());
+        assertEquals(updatedCar.getIsNew(), car1.getIsNew());
         assertEquals(updatedCar.getMileage(), car1.getMileage());
 
         verify(carDao, times(1)).findById(car1.getVin());

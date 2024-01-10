@@ -59,7 +59,7 @@ public class CarServiceImpl implements CarService {
         Optional.of(updatedCar.getYearOfManufacture()).ifPresent(car::setYearOfManufacture);
         Optional.ofNullable(updatedCar.getTransmissionType()).ifPresent(car::setTransmissionType);
         Optional.ofNullable(updatedCar.getPrice()).ifPresent(car::setPrice);
-        Optional.of(updatedCar.isNew()).ifPresent(car::setNew);
+        Optional.of(updatedCar.getIsNew()).ifPresent(car::setIsNew);
         Optional.of(updatedCar.getMileage()).ifPresent(car::setMileage);
     }
 }

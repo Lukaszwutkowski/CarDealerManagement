@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cars")
 public class CarController {
 
     private final CarService carService;
@@ -21,7 +20,7 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping
+    @GetMapping("/cars")
     public String getAllCars(Model model) {
         List<Car> cars = carService.getAllCars();
         model.addAttribute("cars", cars);
@@ -35,22 +34,23 @@ public class CarController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/add")
+    @GetMapping("addCar")
     public String addCarForm(Model model) {
-        model.addAttribute("car", new Car());
+        Car car = new Car();
+        model.addAttribute("car", car);
         return "addCar";
     }
 
-    @PostMapping
+    @PostMapping("/cars")
     public String addNewCar(@ModelAttribute Car car) {
         carService.addNewCar(car);
         return "redirect:/cars";
     }
 
-    @DeleteMapping("/{vin}")
-    public ResponseEntity<Void> deleteCar(@PathVariable String vin) {
+    @PostMapping("/cars/delete/{vin}")
+    public String deleteCar(@PathVariable String vin) {
         carService.deleteCar(vin);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/cars";
     }
 
     @PutMapping("/{vin}")
