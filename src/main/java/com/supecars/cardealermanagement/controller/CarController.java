@@ -27,13 +27,6 @@ public class CarController {
         return "cars";
     }
 
-    @GetMapping("/{vin}")
-    public ResponseEntity<Car> getCarByVinNumber(@PathVariable String vin) {
-        return carService.getCarByVinNumber(vin)
-                .map(ResponseEntity::ok)
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
     @GetMapping("addCar")
     public String addCarForm(Model model) {
         Car car = new Car();
@@ -53,10 +46,20 @@ public class CarController {
         return "redirect:/cars";
     }
 
-    @PutMapping("/{vin}")
-    public ResponseEntity<Car> updateCar(@PathVariable String vin, @RequestBody Car car) {
+    @GetMapping("/{vin}")
+    public String editCarForm(@PathVariable String vin, Model model){
+        return carService.getCarByVinNumber(vin)
+                .map(car -> {
+                    model.addAttribute("car", car);
+                    return "editCar";
+                })
+                .orElse("redirect:/cars");
+    }
+
+    @PostMapping("/update/{vin}")
+    public String updateCar(@PathVariable String vin, @ModelAttribute Car car) {
         carService.updateCar(vin, car);
-        return ResponseEntity.ok(car);
+        return "redirect:/cars";
     }
 
 }

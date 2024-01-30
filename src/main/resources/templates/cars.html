@@ -87,7 +87,7 @@
         <td th:text="${car.isNew}">Is New</td>
         <td th:text="${car.mileage}">Mileage</td>
         <td>
-          <a th:href="@{/update/{vin}(vin=${car.vin})}" class="btn btn-primary btn-sm">Edit</a>
+          <a th:href="@{/edit/{vin}(vin=${car.vin})}" class="btn btn-primary btn-sm">Edit</a>
           <form th:action="@{/cars/delete/{vin}(vin=${car.vin})}" method="post">
             <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this car?')">
           </form>
