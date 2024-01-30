@@ -144,12 +144,12 @@ public class Car {
         this.price = price;
     }
 
-    public boolean isNew() {
+    public boolean getIsNew() {
         return isNew;
     }
 
-    public void setNew(boolean aNew) {
-        isNew = aNew;
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
     }
 
     public int getMileage() {

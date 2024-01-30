@@ -5,12 +5,13 @@ import com.supecars.cardealermanagement.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/cars")
+@Controller
 public class CarController {
 
     private final CarService carService;
@@ -19,35 +20,46 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Car>> getAllCars() {
+    @GetMapping("/cars")
+    public String getAllCars(Model model) {
         List<Car> cars = carService.getAllCars();
-        return ResponseEntity.ok(cars);
+        model.addAttribute("cars", cars);
+        return "cars";
+    }
+
+    @GetMapping("addCar")
+    public String addCarForm(Model model) {
+        Car car = new Car();
+        model.addAttribute("car", car);
+        return "addCar";
+    }
+
+    @PostMapping("/cars")
+    public String addNewCar(@ModelAttribute Car car) {
+        carService.addNewCar(car);
+        return "redirect:/cars";
+    }
+
+    @PostMapping("/cars/delete/{vin}")
+    public String deleteCar(@PathVariable String vin) {
+        carService.deleteCar(vin);
+        return "redirect:/cars";
     }
 
     @GetMapping("/{vin}")
-    public ResponseEntity<Car> getCarByVinNumber(@PathVariable String vin) {
+    public String editCarForm(@PathVariable String vin, Model model){
         return carService.getCarByVinNumber(vin)
-                .map(ResponseEntity::ok)
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(car -> {
+                    model.addAttribute("car", car);
+                    return "editCar";
+                })
+                .orElse("redirect:/cars");
     }
 
-    @PostMapping
-    public ResponseEntity<Car> addNewCar(@RequestBody Car car) {
-        carService.addNewCar(car);
-        return new ResponseEntity<>(car, HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/{vin}")
-    public ResponseEntity<Void> deleteCar(@PathVariable String vin) {
-        carService.deleteCar(vin);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PutMapping("/{vin}")
-    public ResponseEntity<Car> updateCar(@PathVariable String vin, @RequestBody Car car) {
+    @PostMapping("/update/{vin}")
+    public String updateCar(@PathVariable String vin, @ModelAttribute Car car) {
         carService.updateCar(vin, car);
-        return ResponseEntity.ok(car);
+        return "redirect:/cars";
     }
 
 }
