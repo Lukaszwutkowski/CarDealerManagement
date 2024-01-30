@@ -3,15 +3,13 @@ package com.supecars.cardealermanagement.controller;
 import com.supecars.cardealermanagement.model.Customer;
 import com.supecars.cardealermanagement.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/customers")
+@Controller
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -20,34 +18,42 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Customer>> getAllCustomers(){
+    @GetMapping("/customers")
+    public String getAllCustomers(Model model){
         List<Customer> customers = customerService.getAllCustomers();
-        return ResponseEntity.ok(customers);
+        model.addAttribute("customers", customers);
+        return "customers";
+    }
+    @GetMapping("/addCustomer")
+    public String addCustomerForm(Model model){
+        model.addAttribute("customer", new Customer());
+        return "addCustomer";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable int id){
+    public String editCustomerForm(@PathVariable int id, Model model){
         return customerService.getCustomerById(id)
-                .map(ResponseEntity::ok)
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(customer -> {
+                    model.addAttribute("customer", customer);
+                    return "editCustomer";
+                })
+                .orElse("redirect:/customers");
     }
 
-    @PostMapping
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
+    @PostMapping("/customers")
+    public String addCustomer(@ModelAttribute Customer customer){
         customerService.addNewCustomer(customer);
-        return new ResponseEntity<>(customer, HttpStatus.CREATED);
+        return "redirect:/customers";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Customer> deleteCustomer(@PathVariable int id){
+    @PostMapping("/customers/delete/{id}")
+    public String deleteCustomer(@PathVariable int id){
         customerService.deleteCustomer(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/customers";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable int id, @RequestBody Customer customer){
+    @PostMapping("/{id}")
+    public String updateCustomer(@PathVariable int id, @ModelAttribute Customer customer){
         customerService.updateCustomer(id, customer);
-        return ResponseEntity.ok(customer);
+        return "redirect:/customers";
     }
 }
