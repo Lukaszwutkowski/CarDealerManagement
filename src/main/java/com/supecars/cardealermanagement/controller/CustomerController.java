@@ -30,6 +30,7 @@ public class CustomerController {
         return "addCustomer";
     }
 
+    @GetMapping("/editCustomer/{id}")
     public String editCustomerForm(@PathVariable int id, Model model){
         return customerService.getCustomerById(id)
                 .map(customer -> {
@@ -51,7 +52,7 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/update_customer/{id}")
     public String updateCustomer(@PathVariable int id, @ModelAttribute Customer customer){
         customerService.updateCustomer(id, customer);
         return "redirect:/customers";
