@@ -6,16 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title th:text="'Car Dealership Management'">Car Dealership Management</title>
   <!-- Bootstrap CSS -->
-  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <link th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom CSS -->
-  <link href="/static/css/main.css" rel="stylesheet">
+  <link th:href="@{css/main.css}" href="/static/css/main.css" rel="stylesheet">
 </head>
 <body class="bg-light m-0 p-0" style="height: 100vh; display: flex; flex-direction: column;">
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" th:href="@{/}">
-      <img src="/static/images/super.png" alt="Logo" style="max-height: 50px;">
+      <img th:src="@{images/super.png}" src="/static/images/super.png" alt="Logo" style="max-height: 50px;">
       Car Dealership Management
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +59,6 @@
 </footer>
 
 <!-- Bootstrap JavaScript and Popper.js -->
-<script src="/static/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{js/bootstrap.bundle.min.js}" src="/static/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

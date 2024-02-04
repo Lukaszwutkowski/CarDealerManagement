@@ -1,6 +1,7 @@
 package com.supecars.cardealermanagement.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,6 +21,7 @@ public class Employee extends Person{
     private BigDecimal salary;
     @Column(name = "HireDate")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hireDate;
     @OneToMany(mappedBy = "employee")
     private List<Sale> sales;
