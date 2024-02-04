@@ -3,14 +3,13 @@ package com.supecars.cardealermanagement.controller;
 import com.supecars.cardealermanagement.model.Employee;
 import com.supecars.cardealermanagement.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/employees")
+@Controller
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -20,34 +19,44 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Employee>> getAllEmployees() {
+    @GetMapping("/employees")
+    public String getAllEmployees(Model model) {
         List<Employee> employees = employeeService.getAllEmployees();
-        return ResponseEntity.ok(employees);
+        model.addAttribute("employees", employees);
+        return "employees";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable int id) {
-        return employeeService.getEmployeeById(id)
-                .map(ResponseEntity::ok)
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/addEmployee")
+    public String addEmployeeForm(Model model) {
+        model.addAttribute("employee", new Employee());
+        return "addEmployee";
     }
 
-    @PostMapping
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+    @PostMapping("/employees")
+    public String addEmployee(@ModelAttribute Employee employee) {
         employeeService.addNewEmployee(employee);
-        return new ResponseEntity<>(employee, HttpStatus.CREATED);
+        return "redirect:/employees";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Employee> deleteEmployee(@PathVariable int id) {
+    @PostMapping("/employees/delete/{id}")
+    public String deleteEmployee(@PathVariable int id) {
         employeeService.deleteEmployee(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/employees";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
+    @PostMapping("/update_employee/{id}")
+    public String updateEmployee(@PathVariable int id, @ModelAttribute Employee employee) {
         employeeService.updateEmployee(id, employee);
-        return ResponseEntity.ok(employee);
+        return "redirect:/employees";
+    }
+
+    @GetMapping("/editEmployee/{id}")
+    public String editEmployeeForm(@PathVariable int id, Model model){
+        return employeeService.getEmployeeById(id)
+                .map(employee -> {
+                    model.addAttribute("employee", employee);
+                    return "editEmployee";
+                })
+                .orElse("redirect:/employees");
     }
 }

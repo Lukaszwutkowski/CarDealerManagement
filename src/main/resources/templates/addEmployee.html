@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="'Car Dealership Management'">Add Customer</title>
+  <title th:text="'Car Dealership Management'">Add Employee</title>
   <!-- Bootstrap CSS -->
   <link th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
   <!-- Custom CSS -->
@@ -56,6 +56,30 @@
     <div class="mb-3">
       <label for="lastName" class="form-label">Last Name</label>
       <input type="text" class="form-control" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name" required>
+    </div>
+    <div class="mb-3">
+      <label for="street" class="form-label">Street</label>
+      <input type="text" class="form-control" id="street" th:field="*{street}" placeholder="Enter Street">
+    </div>
+    <div class="mb-3">
+      <label for="city" class="form-label">City</label>
+      <input type="text" class="form-control" id="city" th:field="*{city}" placeholder="Enter City">
+    </div>
+    <div class="mb-3">
+      <label for="postalCode" class="form-label">Postal Code</label>
+      <input type="text" class="form-control" id="postalCode" th:field="*{postalCode}" placeholder="Enter Postal Code">
+    </div>
+    <div class="mb-3">
+      <label for="country" class="form-label">Country</label>
+      <input type="text" class="form-control" id="country" th:field="*{country}" placeholder="Enter Country">
+    </div>
+    <div class="mb-3">
+      <label for="phoneNumber" class="form-label">Phone Number</label>
+      <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" placeholder="Enter Phone Number">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter Email">
     </div>
     <div class="mb-3">
       <label for="position" class="form-label">Position</label>
