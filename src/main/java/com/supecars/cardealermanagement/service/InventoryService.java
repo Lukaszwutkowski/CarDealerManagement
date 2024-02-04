@@ -16,4 +16,7 @@ public interface InventoryService {
     void deleteInventory(int id);
 
     void updateInventory(int id, Inventory updatedInventory);
+
+    boolean isVinAlreadyInInventory(String vin);
+
 }

@@ -1,6 +1,7 @@
 package com.supecars.cardealermanagement.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.xml.crypto.Data;
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ public class ServiceEntry {
     private Car car;
     @Column(name = "ServiceDate")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date serviceDate;
     @Column(name = "Description", length = 255)
     private String description;
