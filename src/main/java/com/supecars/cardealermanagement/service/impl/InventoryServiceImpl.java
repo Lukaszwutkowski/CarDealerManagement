@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
@@ -56,4 +58,12 @@ public class InventoryServiceImpl implements InventoryService {
         Optional.ofNullable(updatedInventory.getAcquisitionDate()).ifPresent(existingInventory::setAcquisitionDate);
         Optional.ofNullable(updatedInventory.getAcquisitionPrice()).ifPresent(existingInventory::setAcquisitionPrice);
     }
+
+    @Override
+    public boolean isVinAlreadyInInventory(String vin) {
+        Iterable<Inventory> allInventories = inventoryDao.findAll();
+        return StreamSupport.stream(allInventories.spliterator(), false)
+                .anyMatch(inventory -> inventory.getCar() != null && inventory.getCar().getVin().equals(vin));
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.supecars.cardealermanagement.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class Sale {
     private Employee employee;
     @Column(name = "SaleDate")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date saleDate;
     @Column(name = "SalePrice", precision = 10, scale = 2)
     private BigDecimal salePrice;

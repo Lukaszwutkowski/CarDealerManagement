@@ -1,54 +1,75 @@
 package com.supecars.cardealermanagement.controller;
 
+import com.supecars.cardealermanagement.model.Car;
 import com.supecars.cardealermanagement.model.Inventory;
+import com.supecars.cardealermanagement.service.CarService;
 import com.supecars.cardealermanagement.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/inventories")
+@Controller
 public class InventoryController {
 
     private final InventoryService inventoryService;
 
     @Autowired
+    private CarService carService;
+    @Autowired
     public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Inventory>> getAllInventories() {
+    @GetMapping("/inventories")
+    public String getAllInventories(Model model) {
         List<Inventory> inventories = inventoryService.getAllInventories();
-        return ResponseEntity.ok(inventories);
+        model.addAttribute("inventories", inventories);
+        return "inventories";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Inventory> getInventoryById(@PathVariable int id) {
-        return inventoryService.getInventoryById(id)
-                .map(ResponseEntity::ok)
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/addInventory")
+    public String addInventoryForm(Model model) {
+        List<Car> cars = carService.getAllCars();
+        model.addAttribute("cars", cars);
+        model.addAttribute("inventory", new Inventory());
+        return "addInventory";
     }
 
-    @PostMapping
-    public ResponseEntity<Inventory> addInventory(@RequestBody Inventory inventory) {
+    @PostMapping("/inventories")
+    public String addInventory(@ModelAttribute Inventory inventory, BindingResult bindingResult, Model model) {
+        if (inventoryService.isVinAlreadyInInventory(inventory.getCar().getVin())){
+            bindingResult.rejectValue("car.vin", "error.inventory", "This VIN is already in the inventory");
+            model.addAttribute("cars", carService.getAllCars());
+            return "addInventory";
+        }
         inventoryService.addNewInventory(inventory);
-        return new ResponseEntity<>(inventory, HttpStatus.CREATED);
+        return "redirect:/inventories";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Inventory> deleteInventory(@PathVariable int id) {
+    @PostMapping("/inventories/delete/{id}")
+    public String deleteInventory(@PathVariable int id) {
         inventoryService.deleteInventory(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/inventories";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Inventory> updateInventory(@PathVariable int id, @RequestBody Inventory inventory) {
+    @PostMapping("/update_inventory/{id}")
+    public String updateInventory(@PathVariable int id, @ModelAttribute Inventory inventory) {
         inventoryService.updateInventory(id, inventory);
-        return ResponseEntity.ok(inventory);
+        return "redirect:/inventories";
+    }
+
+    @GetMapping("/editInventory/{id}")
+    public String editInventoryForm(@PathVariable int id, Model model){
+        Inventory inventory = inventoryService.getInventoryById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid inventory Id:" + id));
+        List<Car> cars = carService.getAllCars();
+        model.addAttribute("cars", cars);
+        model.addAttribute("inventory", inventory);
+        return "editInventory";
     }
 
 }
