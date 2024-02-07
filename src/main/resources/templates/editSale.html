@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="'Car Dealership Management'">Add Inventory</title>
+  <title th:text="'Car Dealership Management'">Edit Sale</title>
   <!-- Bootstrap CSS -->
   <link th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
   <!-- Custom CSS -->
@@ -44,42 +44,49 @@
     </div>
   </div>
 </nav>
+<!-- Main Content Area with Background -->
 <div class="flex-grow-1 d-flex">
-<div class="container mt-4">
-  <h2>Add New Inventory</h2>
-  <form th:action="@{/inventories}" th:object="${inventory}" method="post">
-    <!-- Car VIN -->
-    <div class="mb-3">
-      <label for="carVin" class="form-label">Car VIN</label>
-      <select class="form-control" id="carVin" name="car.vin">
-        <option value="">Select a Car VIN</option>
-        <option th:each="car : ${cars}" th:value="${car.vin}" th:text="${car.vin}"></option>
-      </select>
-    </div>
-
-    <!-- Status -->
-    <div class="mb-3">
-      <label for="status" class="form-label">Status</label>
-      <select class="form-control" id="status" name="status">
-        <option value="FOR_SALE">For Sale</option>
-        <option value="RESERVED">Reserved</option>
-        <option value="IN_SERVICE">In Service</option>
-        <option value="SOLD">Sold</option>
-      </select>
-    </div>
-    <!-- Acquisition Date -->
-    <div class="mb-3">
-      <label for="acquisitionDate" class="form-label">Acquisition Date</label>
-      <input type="date" class="form-control" id="acquisitionDate" name="acquisitionDate">
-    </div>
-    <!-- Acquisition Price -->
-    <div class="mb-3">
-      <label for="acquisitionPrice" class="form-label">Acquisition Price</label>
-      <input type="number" class="form-control" id="acquisitionPrice" name="acquisitionPrice" step="0.01">
-    </div>
-    <button type="submit" class="btn btn-primary">Add Inventory</button>
-  </form>
-</div>
+  <div class="container mt-4">
+    <h2>Edit Sale</h2>
+    <form th:action="@{/update_sale/{id}(id=${sale.saleId})}" th:object="${sale}" method="post">
+      <!-- Customer -->
+      <div class="mb-3">
+        <label for="customer" class="form-label">Customer</label>
+        <select class="form-control" id="customer" name="customerId">
+          <option value="">Select a Customer</option>
+          <option th:each="customer : ${customers}" th:value="${customer.customerId}" th:text="${customer.firstName}+ ' ' + ${customer.lastName}">Customer Name</option>
+        </select>
+      </div>
+      <!-- Car VIN -->
+      <div class="mb-3">
+        <label for="carVin" class="form-label">Car VIN</label>
+        <select class="form-control" id="carVin" name="vin">
+          <option value="">Select a Car VIN</option>
+          <option th:each="car : ${cars}" th:value="${car.vin}" th:text="${car.vin}">VIN</option>
+        </select>
+        <div class="error" th:if="${#fields.hasErrors('car.vin')}" th:errors="*{car.vin}">Vin Error</div>
+      </div>
+      <!-- Employee -->
+      <div class="mb-3">
+        <label for="employee" class="form-label">Employee</label>
+        <select class="form-control" id="employee" name="employeeId">
+          <option value="">Select an Employee</option>
+          <option th:each="employee : ${employees}" th:value="${employee.employeeId}" th:text="${employee.firstName}+ ' ' + ${employee.lastName}">Employee Name</option>
+        </select>
+      </div>
+      <!-- Sale Date -->
+      <div class="mb-3">
+        <label for="saleDate" class="form-label">Sale Date</label>
+        <input type="date" class="form-control" id="saleDate" th:field="*{saleDate}">
+      </div>
+      <!-- Sale Price -->
+      <div class="mb-3">
+        <label for="salePrice" class="form-label">Sale Price</label>
+        <input type="number" class="form-control" id="salePrice" th:field="*{salePrice}" placeholder="Enter Sale Price" step="0.01">
+      </div>
+      <button type="submit" class="btn btn-primary">Update Sale</button>
+    </form>
+  </div>
 </div>
 
 <!-- Footer Section -->
@@ -89,7 +96,7 @@
   </div>
 </footer>
 
-<!-- Bootstrap JavaScript -->
+<!-- Bootstrap JavaScript and Popper.js -->
 <script th:src="@{/js/bootstrap.bundle.min.js}" src="/static/js/bootstrap.bundle.min.js"></script>
 
 </body>

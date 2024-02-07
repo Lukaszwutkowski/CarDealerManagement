@@ -1,10 +1,15 @@
 package com.supecars.cardealermanagement.service.impl;
 
 import com.supecars.cardealermanagement.dao.SaleDao;
+import com.supecars.cardealermanagement.dto.SaleDto;
 import com.supecars.cardealermanagement.model.*;
+import com.supecars.cardealermanagement.service.CarService;
+import com.supecars.cardealermanagement.service.CustomerService;
+import com.supecars.cardealermanagement.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,6 +29,13 @@ class SaleServiceImplTest {
 
     @Mock
     private SaleDao saleDao;
+
+    @Mock
+    private CustomerServiceImpl customerService;
+    @Mock
+    private EmployeeServiceImpl employeeService;
+    @Mock
+    private CarServiceImpl carService;
 
     @InjectMocks
     private SaleServiceImpl saleService;
@@ -116,21 +128,47 @@ class SaleServiceImplTest {
 
     @Test
     void it_should_update_sale_by_given_id() {
-        //given
-        when(saleDao.findById(sale1.getSaleId())).thenReturn(Optional.of(sale1));
-        when(saleDao.save(any(Sale.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+        // Given
+        int saleId = 1;
+        Sale existingSale = new Sale();
+        Customer customer = new Customer();
+        customer.setCustomerId(2);
+        Employee employee = new Employee();
+        employee.setEmployeeId(3);
+        Car car = new Car();
+        car.setVin("NEWVIN12345");
 
-        //when
-        saleService.updateSale(sale1.getSaleId(), updatedSale);
+        SaleDto updatedSaleDto = new SaleDto();
+        updatedSaleDto.setSaleId(saleId);
+        updatedSaleDto.setCustomerId(2);
+        updatedSaleDto.setEmployeeId(3);
+        updatedSaleDto.setVin("NEWVIN12345");
+        updatedSaleDto.setSaleDate(new Date());
+        updatedSaleDto.setSalePrice(new BigDecimal("20000.00"));
 
-        //then
-        assertEquals(updatedSale.getCustomer(), sale1.getCustomer());
-        assertEquals(updatedSale.getCar(), sale1.getCar());
-        assertEquals(updatedSale.getEmployee(), sale1.getEmployee());
-        assertEquals(updatedSale.getSaleDate(), sale1.getSaleDate());
-        assertEquals(updatedSale.getSalePrice(), sale1.getSalePrice());
+        when(saleDao.findById(saleId)).thenReturn(Optional.of(existingSale));
+        when(customerService.getCustomerById(anyInt())).thenReturn(Optional.of(customer));
+        when(employeeService.getEmployeeById(anyInt())).thenReturn(Optional.of(employee));
+        when(carService.getCarByVinNumber(anyString())).thenReturn(Optional.of(car));
 
-        verify(saleDao, times(1)).findById(sale1.getSaleId());
-        verify(saleDao, times(1)).save(sale1);
+        // When
+        saleService.updateSale(updatedSaleDto);
+
+        // Then
+        ArgumentCaptor<Sale> saleArgumentCaptor = ArgumentCaptor.forClass(Sale.class);
+        verify(saleDao).save(saleArgumentCaptor.capture());
+        Sale savedSale = saleArgumentCaptor.getValue();
+
+        assertNotNull(savedSale.getCustomer());
+        assertNotNull(savedSale.getEmployee());
+        assertNotNull(savedSale.getCar());
+        assertEquals("NEWVIN12345", savedSale.getCar().getVin());
+        assertEquals(updatedSaleDto.getSaleDate(), savedSale.getSaleDate());
+        assertEquals(0, updatedSaleDto.getSalePrice().compareTo(savedSale.getSalePrice()));
+
+        verify(saleDao).findById(saleId);
+        verify(customerService).getCustomerById(updatedSaleDto.getCustomerId());
+        verify(employeeService).getEmployeeById(updatedSaleDto.getEmployeeId());
+        verify(carService).getCarByVinNumber(updatedSaleDto.getVin());
     }
 }
