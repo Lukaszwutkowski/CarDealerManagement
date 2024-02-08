@@ -2,7 +2,6 @@ package com.supecars.cardealermanagement.model;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -11,7 +10,6 @@ public class Car {
 
     @Id
     @Column(name = "VIN", length = 17)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String vin;
     @Column(name = "Brand", length = 50)
     private String brand;
@@ -30,8 +28,6 @@ public class Car {
     @Enumerated(EnumType.STRING)
     @Column(name = "TransmissionType")
     private TransmissionType transmissionType;
-    @Column(name = "Price", precision = 10, scale = 2)
-    private BigDecimal price;
     @Column(name = "IsNew")
     private boolean isNew;
     @Column(name = "Mileage")
@@ -45,7 +41,7 @@ public class Car {
 
     public Car(String vin, String brand, String model, String engineType, double engineCapacity,
                int horsepower, String color, int yearOfManufacture,
-               TransmissionType transmissionType, BigDecimal price, boolean isNew,
+               TransmissionType transmissionType, boolean isNew,
                int mileage) {
         this.vin = vin;
         this.brand = brand;
@@ -56,7 +52,6 @@ public class Car {
         this.color = color;
         this.yearOfManufacture = yearOfManufacture;
         this.transmissionType = transmissionType;
-        this.price = price;
         this.isNew = isNew;
         this.mileage = mileage;
     }
@@ -135,14 +130,6 @@ public class Car {
 
     public void setTransmissionType(TransmissionType transmissionType) {
         this.transmissionType = transmissionType;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public boolean getIsNew() {

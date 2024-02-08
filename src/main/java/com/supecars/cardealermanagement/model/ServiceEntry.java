@@ -3,7 +3,6 @@ package com.supecars.cardealermanagement.model;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 

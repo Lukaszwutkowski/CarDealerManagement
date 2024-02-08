@@ -12,6 +12,9 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "InventoryID")
     private int inventoryId;
+
+    @Column(name = "Price", precision = 10, scale = 2)
+    private BigDecimal price;
     @ManyToOne
     @JoinColumn(name = "VIN", referencedColumnName = "VIN")
     private Car car;
@@ -25,16 +28,23 @@ public class Inventory {
     @Column(name = "AcquisitionPrice", precision = 10, scale = 2)
     private BigDecimal acquisitionPrice;
 
-    public Inventory(int inventoryId, Car car, Status status, Date acquisitionDate, BigDecimal acquisitionPrice) {
+    public Inventory(int inventoryId, Car car, Status status, Date acquisitionDate, BigDecimal acquisitionPrice, BigDecimal price) {
         this.inventoryId = inventoryId;
         this.car = car;
         this.status = status;
         this.acquisitionDate = acquisitionDate;
         this.acquisitionPrice = acquisitionPrice;
+        this.price = price;
+    }
+    public Inventory() {
     }
 
-    public Inventory() {
+    public BigDecimal getPrice() {
+        return price;
+    }
 
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public int getInventoryId() {

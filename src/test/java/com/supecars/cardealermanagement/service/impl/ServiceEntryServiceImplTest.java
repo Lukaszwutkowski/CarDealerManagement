@@ -43,8 +43,8 @@ class ServiceEntryServiceImplTest {
         Date serviceDate1 = format.parse("2023-12-01");
         Date serviceDate2 = format.parse("2023-09-01");
 
-        car1 = new Car("VIN1", "Brand1", "Model1", "Diesel", 2.4, 165, "Color1", 2023, TransmissionType.AUTOMATIC, new BigDecimal("420000"), true, 50);
-        car2 = new Car("VIN2", "Brand2", "Model2", "Electric", 75.0, 150, "Color2", 2021, TransmissionType.AUTOMATIC, new BigDecimal("350000"), false, 52000);
+        car1 = new Car("VIN1", "Brand1", "Model1", "Diesel", 2.4, 165, "Color1", 2023, TransmissionType.AUTOMATIC,  true, 50);
+        car2 = new Car("VIN2", "Brand2", "Model2", "Electric", 75.0, 150, "Color2", 2021, TransmissionType.AUTOMATIC, false, 52000);
 
         serviceEntry1 = new ServiceEntry(1, car1, serviceDate1, "Test Service", new BigDecimal("6400.00"));
         serviceEntry2 = new ServiceEntry(2, car2, serviceDate2, "Test Service", new BigDecimal("6400.00"));

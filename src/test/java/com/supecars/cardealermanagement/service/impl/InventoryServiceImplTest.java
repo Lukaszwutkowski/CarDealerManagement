@@ -42,19 +42,21 @@ class InventoryServiceImplTest {
         Date acquisitionDate1 = format.parse("2023-12-01");
         Date acquisitionDate2 = format.parse("2023-06-12");
 
-        Car car1 = new Car("VIN1", "Brand1", "Model1", "Diesel", 2.4, 165, "Color1", 2023, TransmissionType.AUTOMATIC, new BigDecimal("300000.00"), true, 50);
-        Car car2 = new Car("VIN2", "Brand2", "Model2", "Electric", 75.0, 150, "Color2", 2021, TransmissionType.AUTOMATIC, new BigDecimal("190000.00"), false, 52000);
+        Car car1 = new Car("VIN1", "Brand1", "Model1", "Diesel", 2.4, 165, "Color1", 2023, TransmissionType.AUTOMATIC, true, 50);
+        Car car2 = new Car("VIN2", "Brand2", "Model2", "Electric", 75.0, 150, "Color2", 2021, TransmissionType.AUTOMATIC, false, 52000);
 
         BigDecimal acquisitionPrice1 = new BigDecimal("300000.00");
         BigDecimal acquisitionPrice2 = new BigDecimal("15000.00");
+        BigDecimal price1 = new BigDecimal("350000.00");
+        BigDecimal price2 = new BigDecimal("20000.00");
 
         Status status1 = Status.FOR_SALE;
         Status status2 = Status.SOLD;
         Status updatedStatus = Status.SOLD;
 
-        inventory1 = new Inventory(1, car1, status1, acquisitionDate1, acquisitionPrice1);
-        inventory2 = new Inventory(2, car2, status2, acquisitionDate2, acquisitionPrice2);
-        updatedInventory = new Inventory(1, car1, updatedStatus, acquisitionDate1, acquisitionPrice1);
+        inventory1 = new Inventory(1, car1, status1, acquisitionDate1, acquisitionPrice1, price1);
+        inventory2 = new Inventory(2, car2, status2, acquisitionDate2, acquisitionPrice2, price2);
+        updatedInventory = new Inventory(1, car1, updatedStatus, acquisitionDate1, acquisitionPrice1, price1);
     }
 
     @Test

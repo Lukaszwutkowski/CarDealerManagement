@@ -53,8 +53,8 @@ class SaleServiceImplTest {
         customer1 = new Customer("Adam", "Nowak", "Ny veien", "Tonsberg", "3230", "Norway", "45632474", "a.nowak@email.com", 1);
         customer2 = new Customer("Julie", "Nygaard", "Vest byen", "Holmestrand", "3080", "Norway", "79632874", "julie@email.com", 2);
 
-        car1 = new Car("VIN1", "Brand1", "Model1", "Diesel", 2.4, 165, "Color1", 2023, TransmissionType.AUTOMATIC, new BigDecimal("420000"), true, 50);
-        car2 = new Car("VIN2", "Brand2", "Model2", "Electric", 75.0, 150, "Color2", 2021, TransmissionType.AUTOMATIC, new BigDecimal("350000"), false, 52000);
+        car1 = new Car("VIN1", "Brand1", "Model1", "Diesel", 2.4, 165, "Color1", 2023, TransmissionType.AUTOMATIC, true, 50);
+        car2 = new Car("VIN2", "Brand2", "Model2", "Electric", 75.0, 150, "Color2", 2021, TransmissionType.AUTOMATIC, false, 52000);
 
         Date hireDate1 = format.parse("2022-04-01");
         Date hireDate2 = format.parse("2020-01-01");

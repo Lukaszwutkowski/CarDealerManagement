@@ -58,6 +58,7 @@
             <th>Status</th>
             <th>Acquisition Date</th>
             <th>Acquisition Price</th>
+            <th>Price</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -68,6 +69,7 @@
             <td th:text="${inventory.status}"></td>
             <td th:text="${#dates.format(inventory.acquisitionDate, 'dd-MM-yyyy')}"></td>
             <td th:text="${inventory.acquisitionPrice}"></td>
+            <td th:text="${inventory.price}"></td>
             <td>
                 <a th:href="@{/editInventory/{id}(id=${inventory.inventoryId})}" class="btn btn-primary btn-sm">Edit</a>
                 <form th:action="@{/inventories/delete/{id}(id=${inventory.inventoryId})}" method="post" style="display:inline">

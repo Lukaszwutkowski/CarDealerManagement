@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +29,8 @@ class CarServiceImplTest {
     void setUp() {
         carDao = mock(CarDao.class);
         carService = new CarServiceImpl(carDao);
-        car1 = new Car("VIN1", "Brand1", "Model1", "Diesel", 2.4, 165, "Color1", 2023, TransmissionType.AUTOMATIC, new BigDecimal("30000"), true, 50);
-        car2 = new Car("VIN2", "Brand2", "Model2", "Electric", 75.0, 150, "Color2", 2021, TransmissionType.AUTOMATIC, new BigDecimal("35000"), false, 52000);
+        car1 = new Car("VIN1", "Brand1", "Model1", "Diesel", 2.4, 165, "Color1", 2023, TransmissionType.AUTOMATIC,  true, 50);
+        car2 = new Car("VIN2", "Brand2", "Model2", "Electric", 75.0, 150, "Color2", 2021, TransmissionType.AUTOMATIC, false, 52000);
     }
 
     @Test
@@ -90,7 +89,7 @@ class CarServiceImplTest {
         when(carDao.findById(car1.getVin())).thenReturn(Optional.of(car1));
         when(carDao.save(any(Car.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Car updatedCar = new Car("VIN1", "UptadetBrand", "UpdatedModel", "Electric", 75.0, 150, "UpdatedColor", 2021, TransmissionType.AUTOMATIC, new BigDecimal("40000"), false, 52000);
+        Car updatedCar = new Car("VIN1", "UptadetBrand", "UpdatedModel", "Electric", 75.0, 150, "UpdatedColor", 2021, TransmissionType.AUTOMATIC, false, 52000);
 
 
         carService.updateCar(car1.getVin(), updatedCar);
@@ -103,7 +102,6 @@ class CarServiceImplTest {
         assertEquals(updatedCar.getColor(), car1.getColor());
         assertEquals(updatedCar.getYearOfManufacture(), car1.getYearOfManufacture());
         assertEquals(updatedCar.getTransmissionType(), car1.getTransmissionType());
-        assertEquals(updatedCar.getPrice(), car1.getPrice());
         assertEquals(updatedCar.getIsNew(), car1.getIsNew());
         assertEquals(updatedCar.getMileage(), car1.getMileage());
 

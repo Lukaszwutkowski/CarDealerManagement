@@ -77,6 +77,10 @@
       <label for="acquisitionPrice" class="form-label">Acquisition Price</label>
       <input type="number" class="form-control" id="acquisitionPrice" name="acquisitionPrice" step="0.01">
     </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="text" class="form-control" id="price" th:field="*{price}" placeholder="Enter Price">
+    </div>
     <button type="submit" class="btn btn-primary">Add Inventory</button>
   </form>
 </div>
