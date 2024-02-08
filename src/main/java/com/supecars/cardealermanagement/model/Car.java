@@ -11,6 +11,7 @@ public class Car {
 
     @Id
     @Column(name = "VIN", length = 17)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String vin;
     @Column(name = "Brand", length = 50)
     private String brand;
