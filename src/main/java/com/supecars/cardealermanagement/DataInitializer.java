@@ -3,6 +3,7 @@ package com.supecars.cardealermanagement;
 import com.supecars.cardealermanagement.dao.*;
 import com.supecars.cardealermanagement.model.*;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
+@Profile("dev")
 public class DataInitializer implements CommandLineRunner {
 
     private CarDao carDao;
